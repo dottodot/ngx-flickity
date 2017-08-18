@@ -1,15 +1,20 @@
 declare let require: any;
 
 import {
-  ElementRef, Directive, OnDestroy, Input, Output, EventEmitter, AfterContentInit
+  ElementRef,
+  Directive,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+  AfterContentInit
 } from '@angular/core';
 
-import { FlickityOptions } from "../../interfaces/flickity-options.interface";
+import { FlickityOptions } from '../../interfaces/flickity-options.interface';
 import { AppConfigService } from '../../services/app-config.service';
 
 @Directive({ selector: '[flickity]' })
 export class FlickityDirective implements AfterContentInit, OnDestroy {
-
   @Input('flickity') config: FlickityOptions = {};
   @Output() slideSelect = new EventEmitter<number>();
   @Output() cellStaticClick = new EventEmitter<number>();
@@ -20,8 +25,10 @@ export class FlickityDirective implements AfterContentInit, OnDestroy {
   private childrenUpdate;
   private childrenUpdateInterval = 300;
 
-  constructor(private el: ElementRef,
-              private appConfigService: AppConfigService) {}
+  constructor(
+    private el: ElementRef,
+    private appConfigService: AppConfigService
+  ) {}
 
   ngAfterContentInit(): void {
     this.init();
@@ -36,7 +43,7 @@ export class FlickityDirective implements AfterContentInit, OnDestroy {
       return;
     }
 
-    const Flickity = require('flickity');
+    const Flickity = require('flickity-imagesloaded');
 
     let config = this.config;
 
@@ -51,11 +58,17 @@ export class FlickityDirective implements AfterContentInit, OnDestroy {
       this.slideSelect.emit(this.selectedIndex);
     });
 
-    this.flkty.on('staticClick', (_event: any, _pointer: any, _cellElement: any, cellIndex: any) => {
-      this.cellStaticClick.emit(cellIndex);
-    });
+    this.flkty.on(
+      'staticClick',
+      (_event: any, _pointer: any, _cellElement: any, cellIndex: any) => {
+        this.cellStaticClick.emit(cellIndex);
+      }
+    );
 
-    this.childrenUpdate = setInterval(() => this.updateElements(), this.childrenUpdateInterval);
+    this.childrenUpdate = setInterval(
+      () => this.updateElements(),
+      this.childrenUpdateInterval
+    );
   }
 
   destroy() {

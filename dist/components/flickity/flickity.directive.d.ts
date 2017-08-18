@@ -1,5 +1,5 @@
 import { ElementRef, OnDestroy, EventEmitter, AfterContentInit } from '@angular/core';
-import { FlickityOptions } from "../../interfaces/flickity-options.interface";
+import { FlickityOptions } from '../../interfaces/flickity-options.interface';
 import { AppConfigService } from '../../services/app-config.service';
 export declare class FlickityDirective implements AfterContentInit, OnDestroy {
     private el;
